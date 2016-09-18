@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, redirect, url_for
 
 from database import db_session, init_db
 from flask_graphql import GraphQLView
@@ -29,6 +29,11 @@ default_query = '''
 
 
 app.add_url_rule('/graphql', view_func=GraphQLView.as_view('graphql', schema=schema, graphiql=True))
+
+
+@app.route('/')
+def home():
+    return redirect(url_for('graphql'))
 
 
 @app.teardown_appcontext
